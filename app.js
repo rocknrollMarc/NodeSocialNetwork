@@ -147,6 +147,13 @@ app.post('/accounts/:id/status', function(req, res){
     res.send(200);
 });
 
+app.get('/accounts/:id/activity', function(req, res, next){
+    var accountId = req.params.id == 'me'
+                    ? req.session.accountId
+                    : req.params.id;
+    models.Account.findById(accountId, function(account) {
+        res.send(account.activity);
+    });
+});
+
 app.listen(8080);
-
-
